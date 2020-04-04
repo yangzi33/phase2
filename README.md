@@ -1,4 +1,1 @@
-# agenda
-## TODO
-* Android GUI
-* Remove csv, use SQLite instead
+phase1 & 2 code without GUI.
