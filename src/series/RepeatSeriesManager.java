@@ -1,9 +1,5 @@
 package series;
 
-import event.Event;
-import event.ReadWriteCSV;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class RepeatSeriesManager {

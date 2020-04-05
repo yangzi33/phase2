@@ -1,7 +1,5 @@
 package series;
 
-import event.Event;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -11,20 +9,20 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-public class SeriesIO {
+public class LinkedSeriesIO {
 
     protected static String LINKED_DATA_FILE = "./data/linkedData.csv";
 
-    protected static ArrayList<Series> allSeries = new ArrayList<>();
+    protected static ArrayList<LinkedSeries> allLinkedSeries = new ArrayList<>();
 
-    protected static ArrayList<String> allSeriesId = new ArrayList<>();
+    protected static ArrayList<String> allLinkedSeriesId = new ArrayList<>();
 
-    protected static ArrayList<String> allSeriesName = new ArrayList<>();
+    protected static ArrayList<String> allLinkedSeriesName = new ArrayList<>();
 
-    public SeriesIO() {}
+    public LinkedSeriesIO() {}
 
-    public static ArrayList<Series> readSeriesData() {
-        ArrayList<Series> series = new ArrayList<>();
+    public static ArrayList<LinkedSeries> readLinkedSeriesData() {
+        ArrayList<LinkedSeries> series = new ArrayList<>();
         File seriesFile = new File(LINKED_DATA_FILE);
         if (seriesFile.exists()) {
             try {
@@ -36,12 +34,12 @@ public class SeriesIO {
                     String seriesName = attr[1];
                     ArrayList<String> seriesEventsId = new ArrayList<>(Arrays.asList(attr).subList(2, attr.length));
 
-                    allSeriesId.add(seriesId);
-                    allSeriesName.add(seriesName);
+                    allLinkedSeriesId.add(seriesId);
+                    allLinkedSeriesName.add(seriesName);
 
-                    Series currSeries = new Series(seriesName, seriesId);
-                    currSeries.eventIdArray = seriesEventsId;
-                    series.add(currSeries);
+                    LinkedSeries currLinkedSeries = new LinkedSeries(seriesName, seriesId);
+                    currLinkedSeries.eventIdArray = seriesEventsId;
+                    series.add(currLinkedSeries);
                     System.out.println("Line is invalid");
                     System.out.println(curr);
                 }scanner.close();
@@ -49,28 +47,28 @@ public class SeriesIO {
                 ex.printStackTrace();
             }
         } else {
-            System.out.println("No Valid Series File Found");
+            System.out.println("No Valid series.LinkedSeries File Found");
         }
-        allSeries = series;
+        allLinkedSeries = series;
         return series;
     }
 
     /**
-     * Writes the Series list into the event data file.
+     * Writes the series.LinkedSeries list into the event data file.
      *
-     * @param allSeries - the list of all Series to save into the event data file
+     * @param allLinkedSeries - the list of all series.LinkedSeries to save into the event data file
      * @return - true if the write was successful, false otherwise.
      */
-    public static boolean writeSeriesData(ArrayList<Series> allSeries) {
+    public static boolean writeSeriesData(ArrayList<LinkedSeries> allLinkedSeries) {
         try {
-            File SeriesFile = new File(LINKED_DATA_FILE);
-            if (!SeriesFile.exists()) {
-                if (!SeriesFile.createNewFile()) {
+            File linkedSeriesFile = new File(LINKED_DATA_FILE);
+            if (!linkedSeriesFile.exists()) {
+                if (!linkedSeriesFile.createNewFile()) {
                     return false;
                 }
             }
-            FileWriter writer = new FileWriter(SeriesFile);
-            for (Series curr : allSeries) {
+            FileWriter writer = new FileWriter(linkedSeriesFile);
+            for (LinkedSeries curr : allLinkedSeries) {
                 List<String> curr_line_lst = Arrays.asList(
                         curr.getSeriesId(),
                         curr.getSeriesName()

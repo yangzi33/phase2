@@ -1,12 +1,11 @@
 package alert;
 
+import main.TimeUtils;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import utils.TimeUtils;
-
-import static alert.AlertManager.ALERT_DATE_MASK;
 
 public class Alert {
 
@@ -26,7 +25,7 @@ public class Alert {
 		this.frequencyString = frequencyString;
 		this.frequencySeconds = 0;
 
-		SimpleDateFormat formatter = new SimpleDateFormat(ALERT_DATE_MASK);
+		SimpleDateFormat formatter = new SimpleDateFormat(AlertManager.ALERT_DATE_MASK);
 		this.date = Calendar.getInstance();
 		try {
 			this.date.setTime(formatter.parse(dateString));

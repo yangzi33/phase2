@@ -1,20 +1,22 @@
-package event;
+package main;
 
+import event.Event;
 import series.LinkedSeries;
 import series.LinkedSeriesManager;
 import series.RepeatSeries;
 import series.RepeatSeriesManager;
+import user.CalendarManager;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import static event.EventManager.allEvents;
 public class Searching {
 
+    CalendarManager calendarManager;
 
     /** Please do  not change this method!!!*/
     public Event searchById(String id){
-        for (Event event : ReadWriteCSV.readEventData()){
+        for (Event event : calendarManager.eventManager.allEvents){
             if( event.getEventId().equals(id)){
                 return event; }
         }
@@ -43,17 +45,17 @@ public class Searching {
     }
 
     public ArrayList<Event> searchByName() {
-        return searchByName(allEvents);
+        return searchByName(calendarManager.eventManager.allEvents);
     }
 
-    public ArrayList<Event> searchByStartTime(ArrayList<Event> list){
+    public ArrayList<Event> searchByStartTIme(ArrayList<Event> list){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter the event start time:");
         String starttime = scanner.nextLine().trim();
         return givenNameSearchStartTime(list, starttime);
     }
     public ArrayList<Event> givenNameSearchStartTime(ArrayList<Event> list, String starttime){
-        Event.TimeFormateChecker(starttime);
+        Event.TimeFormateCHecker(starttime);
         ArrayList<Event> eventStartTime = new ArrayList<>();
         for (Event event : list) {
             if (event.getEventStartTime().equals(starttime)) {
@@ -67,7 +69,7 @@ public class Searching {
     }
 
     public ArrayList<Event> searchByStartTime(){
-        return searchByStartTime(allEvents);
+        return searchByStartTIme(calendarManager.eventManager.allEvents);
     }
 
     public ArrayList<Event> searchByEndTime(ArrayList<Event> list) {
@@ -78,7 +80,7 @@ public class Searching {
     }
 
     public ArrayList<Event> givenNameSearchEndTime(ArrayList<Event> list, String endtime){
-        Event.TimeFormateChecker(endtime);
+        Event.TimeFormateCHecker(endtime);
         ArrayList<Event> eventNames = new ArrayList<>();
         for (Event event : list) {
             if (event.getEventName().equals(endtime)) {
@@ -92,7 +94,7 @@ public class Searching {
     }
 
     public ArrayList<Event> searchByEndTime(){
-        return searchByEndTime(allEvents);
+        return searchByEndTime(calendarManager.eventManager.allEvents);
     }
 
     // Note: this method will be unpacked into multiple mthods: separate UI and events found.
@@ -109,9 +111,9 @@ public class Searching {
             for (LinkedSeries lseries : LinkedSeriesManager.allLinkedSeries) {
                 if (lseries.getSeriesName().equals(seriesName)) {
                     seriesExists = true;
-                    // Creating deep copy, so the id's won't be modified accidently
+                    // main.main.Creating deep copy, so the id's won't be modified accidently
                     ArrayList<String> idFound = lseries.getSeriesEventsId();
-                    for (Event event : allEvents) {
+                    for (Event event : calendarManager.eventManager.allEvents) {
                         if (idFound.contains(event.getEventId())) {
                             foundInLinked.add(event.getEventName());
                         }
@@ -122,7 +124,7 @@ public class Searching {
             for (RepeatSeries rseries : RepeatSeriesManager.allRepeatSeries) {
                 if (rseries.getSeriesName().equals(seriesName)) {
                     seriesExists = true;
-                    for (Event event : allEvents) {
+                    for (Event event : calendarManager.eventManager.allEvents) {
                         if (event.getEventId().equals(rseries.getSeriesEventsId().get(0))) {
                             foundInRepeat.add(event.getEventName());
                             foundInRepeat.add(rseries.getFrequency());

@@ -1,11 +1,8 @@
-package features;
+package feature;
 
 import event.Event;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Tag extends Feature {
     /**name of the tag.*/

@@ -1,7 +1,7 @@
 package series;
 
 import event.Event;
-import event.ReadWriteCSV;
+import user.CalendarManager;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,20 +9,22 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class NewSeries {
+    public CalendarManager calendarManager;
 
-    public NewSeries() {}
+    public NewSeries(CalendarManager c) {
+        calendarManager = c;
 
-    /** Take user's input of Series' name and event.
+    }
+    /** Take user's input of series.LinkedSeries' name and event.
      *
      *
      */
-    public static void seriesInput() {
-
+    public void linkedSeriesInput() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter the name of your series:");
         String seriesName = scanner.nextLine();
 
-        ArrayList<Event> events = new ArrayList<>(ReadWriteCSV.readEventData());
+        ArrayList<Event> events = calendarManager.eventManager.allEvents;
         ArrayList<Event> eventsSelected = new ArrayList<>();
 
         System.out.println("Please select the events for this series. You have " + Integer.toString(events.size()) +
@@ -53,8 +55,8 @@ public class NewSeries {
 
 
         try{
-            SeriesManager.addNewSeries(seriesName);
-            System.out.println("Series created.");
+            LinkedSeriesManager.addNewSeries(seriesName);
+            System.out.println("series.Series created.");
         } catch (Exception e) {
             System.out.println("Error" + e);
         }
@@ -63,7 +65,7 @@ public class NewSeries {
     /** Take user's input of repeating series' name, duration, and frequencies.
      *
      */
-    public static void repeatingSeriesInput() {
+    public void repeatingSeriesInput() {
         Scanner scanner = new Scanner(System.in);
         boolean validTime = false;
         String seriesName;
@@ -73,18 +75,18 @@ public class NewSeries {
         System.out.println("Please enter the name of your series:");
         seriesName = scanner.nextLine();
 
-//        System.out.println("Please set your event start time, in format of DD/MM/YYYY HH:MM");
-//        startTime = scanner.nextLine();
-//
-//        System.out.println("Please set your event end time, in format of DD/MM/YYYY HH:MM");
-//        endTime = scanner.nextLine();
+        System.out.println("Please set your event start time, in format of DD/MM/YYYY HH:MM");
+        startTime = scanner.nextLine();
+
+        System.out.println("Please set your event end time, in format of DD/MM/YYYY HH:MM");
+        endTime = scanner.nextLine();
         while (!validTime) {
             System.out.println("Please set your event start time, in format of DD-MM-YYYY HH:MM");
             startTime = scanner.nextLine();
 
             System.out.println("Please set your event end time, in format of DD-MM-YYYY HH:MM");
             endTime = scanner.nextLine();
-            validTime = (Event.TimeFormateChecker(startTime) && Event.TimeFormateChecker(endTime));
+            validTime = (Event.TimeFormateCHecker(startTime) && Event.TimeFormateCHecker(endTime));
         }
 
         boolean ValidFrequency = false;
@@ -112,7 +114,7 @@ public class NewSeries {
             fEndValid = endFormatChecker(frequencyEnd);
         }
         RepeatSeriesManager.addNewSeries(seriesName, startTime, endTime, frequency, frequencyEnd);
-        System.out.println("Series created.");
+        System.out.println("series.Series created.");
     }
 
     private static boolean endFormatChecker(String time) {

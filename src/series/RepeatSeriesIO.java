@@ -4,7 +4,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
 
 public class RepeatSeriesIO {
 
@@ -40,16 +43,16 @@ public class RepeatSeriesIO {
                 ex.printStackTrace();
             }
         } else {
-            System.out.println("No Valid RepeatSeries File Found");
+            System.out.println("No Valid series.RepeatSeries File Found");
         }
-//        LinkedSeriesManager.allLinkedSeries = series;
+//        series.LinkedSeriesManager.allLinkedSeries = series;
         return series;
     }
 
     /**
      * Writes the events list into the event data file.
      *
-     * @param allRepeatSeries - the list of all RepeatSeries to save into the event data file
+     * @param allRepeatSeries - the list of all series.RepeatSeries to save into the event data file
      * @return - true if the write was successful, false otherwise.
      */
     public static boolean writeRepeatData(ArrayList<RepeatSeries> allRepeatSeries) {

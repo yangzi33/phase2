@@ -1,22 +1,18 @@
 package event;
 
-import main.Calendar;
+import user.CalendarManager;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
-
-import static event.EventManager.allEvents;
+import java.util.ArrayList;
 
 
 public class Event {
     /*
-     * An events.Event
+     * An events.event.Event
      * Detailed descriptions required here :)
      * */
     public static String EVENT_EVENTID_PRETEXT = "event";
-
-    private static String EVENT_TIME_PATTERN = "dd-MM-yyyy HH:mm";
 
     protected String eventId;
 
@@ -39,8 +35,8 @@ public class Event {
      *
      * @param event- the event that want to be deleted.
      */
-    public void deleteEvent(Event event){
-        allEvents.remove(event);
+    public void deleteEvent(CalendarManager c, Event event){
+        c.eventManager.allEvents.remove(event);
     }
 
     /**
@@ -49,14 +45,14 @@ public class Event {
      * @param oldname - event's name
      * @param newname- event's new name
      */
-    public void changeEventName(String oldname, String newname){
-        for (Event curr_event : allEvents) {
+    public void changeEventName(String oldname, String newname, CalendarManager c){
+        for (Event curr_event : c.eventManager.allEvents) {
             if (curr_event.eventName.equals(oldname)) {
                 curr_event.eventName = newname;
-                System.out.println("Event name changed success!");
+                System.out.println("event.Event name changed success!");
             }
         }
-        System.out.println("Event not found");
+        System.out.println("event.Event not found");
     }
 
     /**
@@ -66,13 +62,13 @@ public class Event {
      * @param oldtime - the time of event want to be changed
      * @param newtime - the time of event that want to to change to
      */
-    public void changeEventStartTime(String eventName, String oldtime, String newtime){
-        if (TimeFormateChecker(newtime) && TimeFormateChecker(oldtime)){
-            for (Event curr_event : allEvents) {
+    public void changeEventstarttime(String eventName, String oldtime, String newtime, CalendarManager c){
+        if (TimeFormateCHecker(newtime) && TimeFormateCHecker(oldtime)){
+            for (Event curr_event : c.eventManager.allEvents) {
                 if (curr_event.eventName.equals(eventName)){
-                    if (curr_event.startTime != null && curr_event.startTime.equals(oldtime)){
+                    if (curr_event.startTime.equals(oldtime)){
                         curr_event.startTime = newtime;
-                        System.out.println("Event start time change success.");
+                        System.out.println("event.Event start time change success.");
                     }
                     else {
                         System.out.println("this event doesn't happen in this time");
@@ -80,7 +76,7 @@ public class Event {
                 }
             }
         }
-        System.out.println( "Event not found");
+        System.out.println( "event.Event not found");
     }
 
     /**
@@ -90,53 +86,52 @@ public class Event {
      * @param time - the time of event want to be changed
      * @param newendtime - the new duration of event that want to to change to
      */
-    public void changeEventEndTime(String eventName, String time, String newendtime) {
-        if (TimeFormateChecker(eventName) && TimeFormateChecker(newendtime)) {
-            for (Event curr_event : allEvents) {
+    public void changeEventEndTime(String eventName, String time, String newendtime, CalendarManager c) {
+        if (TimeFormateCHecker(eventName) && TimeFormateCHecker(newendtime)) {
+            for (Event curr_event : c.eventManager.allEvents) {
                 if (curr_event.eventName.equals(eventName)) {
-                    if (curr_event.endTime != null && curr_event.endTime.equals(time)) {
+                    if (curr_event.startTime.equals(time)) {
                         curr_event.endTime = newendtime;
-                        System.out.println("Event duration change success.");
+                        System.out.println("event.Event duration change success.");
                     } else {
                         System.out.println("this event doesn't happen in this time");
                     }
                 }
             }
         }
-        System.out.println("Event not found");
+        System.out.println("event.Event not found");
     }
 
     /**
      * to remove event from user's input.
      */
-    public void removeEvent() {
-        Searching searching = new Searching();
-        System.out.println("Please enter the event name you want to delete");
-        Scanner scanner = new Scanner(System.in);
-        String eventName = scanner.nextLine().trim();
-        ArrayList<Event> remove = searching.givennamesearch(allEvents,eventName);
-        if (remove.size() != 1) {
-            remove = searching.searchByStartTime(remove);
-            assert remove != null;
-            if (remove.size() != 1) {
-                remove = searching.searchByEndTime(remove);
-            }
-        }
-        System.out.println("Are you sure you want to delete" + eventName + "? Y/N");
-        String answer = scanner.nextLine().trim();
-        if (answer.equals("Y")) {
-            assert remove != null;
-            deleteEvent(remove.get(0));
-            System.out.println("Event deleted success!");
-        }else if (answer.equals("N")) {
-            System.out.println("exit!");
-            Calendar.MenuOption();
-        }else{
-            System.out.println("Wrong format!");
-            removeEvent();
-        }
-    }
-    /** Get events.Event's Name
+//    public void removeEvent(user.CalendarManager c) {
+//        main.Searching searching = new main.Searching();
+//        System.out.println("Please enter the event name you want to delete");
+//        Scanner scanner = new Scanner(System.in);
+//        String eventName = scanner.nextLine().trim();
+//        ArrayList<event.Event> remove = searching.givennamesearch(c.eventManager.allEvents,eventName);
+//        if (remove.size() != 1) {
+//            remove = searching.searchByStartTIme(remove);
+//            assert remove != null;
+//            if (remove.size() != 1) {
+//                remove = searching.searchByEndTime(remove);
+//            }
+//        }
+//        System.out.println("Are you sure you want to delete" + eventName + "? Y/N");
+//        String answer = scanner.nextLine().trim();
+//        if (answer.equals("Y")) {
+//            assert remove != null;
+//            deleteEvent(c, remove.get(0));
+//            System.out.println("event.Event deleted success!");
+//        }else if (answer.equals("N")) {
+//            System.out.println("exit!");
+//        }else{
+//            System.out.println("Wrong format!");
+//            removeEvent(c);
+//        }
+//    }
+    /** Get events.event.Event's Name
      *
      * @return eventName
      */
@@ -149,7 +144,7 @@ public class Event {
      * @return duration
      */
     public String getEventEndTime() {
-        return endTime != null ? endTime : "";
+        return this.endTime;
     }
 
     /**Get event's starttime.
@@ -157,10 +152,10 @@ public class Event {
      * @return startTime.
      */
     public  String getEventStartTime() {
-        return startTime != null ? startTime : "";
+        return this.startTime;
     }
 
-    /** Get events.Event's ID
+    /** Get events.event.Event's ID
      *
      * @return eventId
      */
@@ -171,8 +166,8 @@ public class Event {
     public ArrayList<String> showEvent(){
         ArrayList<String> information = new ArrayList<>();
         information.add(this.eventName);
-        information.add(startTime != null ? startTime : "");
-        information.add(endTime != null ? endTime : "");
+        information.add(startTime);
+        information.add(endTime);
         information.add(eventId);
         return information;
     }
@@ -183,77 +178,19 @@ public class Event {
      * @param time - the time want to check
      * @return true if the string can convert to date format, otherwise false.
      */
-    public static boolean TimeFormateChecker(String time) {
+    public static boolean TimeFormateCHecker(String time) {
         boolean answer = false;
-        SimpleDateFormat format = new SimpleDateFormat(EVENT_TIME_PATTERN);
+        String pattern = "dd-MM-yyyy HH:mm";
+        SimpleDateFormat format = new SimpleDateFormat(pattern);
         format.setLenient(false);
         try {
             format.parse(time);
             answer = true;
         } catch (ParseException e) {
             e.printStackTrace();
-            System.out.println("Error! Please follow the format " + EVENT_TIME_PATTERN);
+            System.out.println("Error!");
         }
         return answer;
-    }
-
-    /**
-     * Postpone the event with the event name and old time to the new time,
-     * maintaining the duration of the event
-     *
-     * @param eventName - the event name to postpone
-     * @param oldtime - the old time of the event, for validation
-     * @param newtime - the new start time of the event
-     */
-    public void postponeTo(String eventName, String oldtime, String newtime) {
-        if (TimeFormateChecker(newtime) && TimeFormateChecker(oldtime)){
-            SimpleDateFormat format = new SimpleDateFormat(EVENT_TIME_PATTERN);
-            try {
-                Date newDate = format.parse(newtime);
-                for (Event curr_event : allEvents) {
-                    if (curr_event.eventName.equals(eventName)){
-                        if (curr_event.startTime != null && curr_event.endTime != null &&
-                                curr_event.startTime.equals(oldtime)){
-                            Date startDate = format.parse(curr_event.startTime);
-                            Date endDate = format.parse(curr_event.endTime);
-                            long duration = startDate.getTime() - newDate.getTime();
-                            Date newEndDate = new Date(duration + endDate.getTime());
-                            curr_event.startTime = newtime;
-                            curr_event.endTime = format.format(newEndDate);
-                            System.out.println("Event postpone success.");
-                        }
-                        else {
-                            System.out.println("This event doesn't happen in this time");
-                        }
-                    }
-                }
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-        System.out.println( "Event not found");
-    }
-
-    /**
-     * Postpone the event's start time indefinitely.
-     * Note: This will make the start time and end time of the event to null.
-     *
-     * @param eventName - the name of the event
-     * @param oldtime - the old start time of the event, for validation
-     */
-    public void postponeIndefinitely(String eventName, String oldtime) {
-        for (Event curr_event : allEvents) {
-            if (curr_event.eventName.equals(eventName)){
-                if (curr_event.startTime != null && curr_event.startTime.equals(oldtime)){
-                    curr_event.startTime = null;
-                    curr_event.endTime = null;
-                    System.out.println("Event postpone success.");
-                }
-                else {
-                    System.out.println("This event doesn't happen in this time");
-                }
-            }
-        }
     }
 
 

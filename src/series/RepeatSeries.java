@@ -1,9 +1,7 @@
 package series;
 
 import event.Event;
-import event.EventManager;
-import event.ReadWriteCSV;
-import sun.util.resources.CalendarData;
+import user.CalendarManager;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -25,6 +23,9 @@ public class RepeatSeries extends Series {
     protected ArrayList<Event> eventArray;
 
     protected ArrayList<String> eventIdArray;
+
+    public CalendarManager calendarManager;
+
 
     public RepeatSeries(String name, String seriesId, String startTime, String endTime, String frequency,
                         String frequencyEnd) {
@@ -64,11 +65,11 @@ public class RepeatSeries extends Series {
             String eventStartDate = startSDF.format(startCalendar.getTime());
             String eventEndDate = endSDF.format(endCalendar.getTime());
 
-            int eventIdNum = EventManager.allEvents.size() + 1;
+            int eventIdNum = calendarManager.eventManager.allEvents.size() + 1;
             String eventId = "event" + eventIdNum;
 
             Event newEvent = new Event(name, eventStartDate, eventEndDate, eventId);
-            EventManager.allEvents.add(newEvent);
+            calendarManager.eventManager.allEvents.add(newEvent);
             eventArray.add(newEvent);
 
             switch (frequency){

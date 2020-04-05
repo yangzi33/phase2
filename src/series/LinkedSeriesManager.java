@@ -1,13 +1,8 @@
 package series;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.*;
-import event.Event;
+import java.util.ArrayList;
 
-public class SeriesManager {
+public class LinkedSeriesManager {
 
 
     public static ArrayList<LinkedSeries> allLinkedSeries = LinkedSeriesIO.readLinkedSeriesData();

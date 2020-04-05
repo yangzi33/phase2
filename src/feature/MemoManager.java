@@ -1,18 +1,9 @@
-package features;
+package feature;
 
 import event.Event;
 import event.EventManager;
-import event.ReadWriteCSV;
-import event.Searching;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
 import static java.lang.Integer.parseInt;
@@ -29,7 +20,7 @@ public class MemoManager extends FeatureManager {
 
 
 
-    /** User can view all memos they created. */
+    /** user.User can view all memos they created. */
     public void viewMemos(){
         int n = allMemos.size();
         if(n  == 0){
@@ -81,7 +72,7 @@ public class MemoManager extends FeatureManager {
         allMemos.get(num-1).changeContent(newcontent);
         System.out.println("Changed!");
     }
-    public void removeEvent(){
+    public void removeEvent(EventManager manager){
         for (int i = 0; i < allMemos.size(); i++){
             int num  = 1+i;
             System.out.println("Memo" + num+ ": " + allMemos.get(i).getContent());
@@ -90,14 +81,14 @@ public class MemoManager extends FeatureManager {
         Scanner scanner1 = new Scanner(System.in);
         String memo = scanner1.nextLine().trim();
         int num = parseInt(memo);
-        EventManager.viewOptions(allMemos.get(num-1).getEvents());
+        manager.viewOptions(allMemos.get(num-1).getEvents());
         String eventnum= scanner1.nextLine().trim();
         int eventindext = parseInt(eventnum);
         allMemos.get(num-1).deleteEvent(allMemos.get(num-1).getEvents().get(eventindext-1));
         System.out.println("Changed!");
     }
 
-    public void addNewEvent(){
+    public void addNewEvent(EventManager manager){
         for (int i = 0; i < allMemos.size(); i++){
             int num  = 1+i;
             System.out.println("Memo" + num+ ": " + allMemos.get(i).getContent());
@@ -106,7 +97,7 @@ public class MemoManager extends FeatureManager {
         Scanner scanner1 = new Scanner(System.in);
         String memo = scanner1.nextLine().trim();
         int num = parseInt(memo);
-        EventManager.viewOptions(allMemos.get(num-1).getEvents());
+        manager.viewOptions(allMemos.get(num-1).getEvents());
         String eventnum= scanner1.nextLine().trim();
         int eventindext = parseInt(eventnum);
         allMemos.get(num-1).addEventtoMemo(allMemos.get(num-1).getEvents().get(eventindext-1));
@@ -137,7 +128,7 @@ public class MemoManager extends FeatureManager {
             }
         }
         if(lists.size() ==  0){
-            System.out.println("No Memo Found!");
+            System.out.println("No feature.Memo Found!");
         }else{
             for(int i =0; i<lists.size(); i++){
                 int number = i + 1;

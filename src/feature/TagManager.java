@@ -1,17 +1,9 @@
-package features;
+package feature;
 
 import event.Event;
-import event.EventManager;
-import event.Searching;
+import user.CalendarManager;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
 import static java.lang.Integer.parseInt;
@@ -19,7 +11,7 @@ import static java.lang.Integer.parseInt;
 public class TagManager extends FeatureManager {
     public ArrayList<Tag> allTags = new ArrayList<>();
 
-    /** user.User can view tags they created. */
+    /** user.user.User can view tags they created. */
     public void viewTags() {
         int n = allTags.size();
         if(n  == 0){
@@ -28,7 +20,7 @@ public class TagManager extends FeatureManager {
         }else{
             for (int i = 0; i < n; i++){
                 int number = i + 1;
-                System.out.println("Tag" + number + ": " + allTags.get(i).Name);
+                System.out.println("feature.Tag" + number + ": " + allTags.get(i).Name);
                 System.out.println("With events:");
                 if(allTags.get(i).getEvents() == null){
                     System.out.println("No events yet!!");
@@ -49,7 +41,7 @@ public class TagManager extends FeatureManager {
                 if(t.getIds().contains(event.getEventId())){
                     indicator =  true;
                     num++;
-                    printtags.add("Tag#" + num + ": " +t.getName());
+                    printtags.add("feature.Tag#" + num + ": " +t.getName());
                 }
             }
 
@@ -67,7 +59,7 @@ public class TagManager extends FeatureManager {
     public void changeTagContent(){
         for (int i = 0; i < allTags.size(); i++){
             int num  = 1+i;
-            System.out.println("Tag" + num+ ": " + allTags.get(i).getName());
+            System.out.println("feature.Tag" + num+ ": " + allTags.get(i).getName());
         }
         System.out.println("Please type the tag number you want to change: ");
         Scanner scanner1 = new Scanner(System.in);
@@ -79,32 +71,32 @@ public class TagManager extends FeatureManager {
         System.out.println("Changed!");
     }
 
-    public void removeEvent(){
+    public void removeEvent(CalendarManager c){
         for (int i = 0; i < allTags.size(); i++){
             int num  = 1+i;
-            System.out.println("Tag" + num+ ": " + allTags.get(i).getName());
+            System.out.println("feature.Tag" + num+ ": " + allTags.get(i).getName());
         }
         System.out.println("Please type the tag number you want to change: ");
         Scanner scanner1 = new Scanner(System.in);
         String memo = scanner1.nextLine().trim();
         int num = parseInt(memo);
-        EventManager.viewOptions(allTags.get(num-1).getEvents());
+        c.eventManager.viewOptions(allTags.get(num-1).getEvents());
         String eventnum= scanner1.nextLine().trim();
         int eventindext = parseInt(eventnum);
         allTags.get(num-1).deleteEvent(allTags.get(num-1).getEvents().get(eventindext-1));
         System.out.println("Changed!");
     }
 
-    public void addNewEvent(){
+    public void addNewEvent(CalendarManager c){
         for (int i = 0; i < allTags.size(); i++){
             int num  = 1+i;
-            System.out.println("Tag" + num+ ": " + allTags.get(i).getName());
+            System.out.println("feature.Tag" + num+ ": " + allTags.get(i).getName());
         }
         System.out.println("Please type the tag number you want to add event to: ");
         Scanner scanner1 = new Scanner(System.in);
         String memo = scanner1.nextLine().trim();
         int num = parseInt(memo);
-        EventManager.viewOptions(allTags.get(num-1).getEvents());
+        c.eventManager.viewOptions(allTags.get(num-1).getEvents());
         String eventnum= scanner1.nextLine().trim();
         int eventindext = parseInt(eventnum);
         allTags.get(num-1).addEvent(allTags.get(num-1).getEvents().get(eventindext-1));
@@ -113,7 +105,7 @@ public class TagManager extends FeatureManager {
     public void deleteTag(){
         for (int i = 0; i < allTags.size(); i++){
             int num  = 1+i;
-            System.out.println("Tag" + num+ ": " + allTags.get(i).getName());
+            System.out.println("feature.Tag" + num+ ": " + allTags.get(i).getName());
         }
         System.out.println("Please type the tag number you want to delete: ");
         Scanner scanner1 = new Scanner(System.in);
@@ -136,11 +128,11 @@ public class TagManager extends FeatureManager {
             }
         }
         if (lists.size() == 0) {
-            System.out.println("No Tag Found!");
+            System.out.println("No feature.Tag Found!");
         } else {
             for(int i =0; i<lists.size(); i++){
                 int number = i + 1;
-                System.out.println("Tag#" + number + ": " + lists.get(i).getName());
+                System.out.println("feature.Tag#" + number + ": " + lists.get(i).getName());
                 System.out.println("Events with this tag: ");
                 FeatureEvents(lists.get(i));
                 System.out.println("-----------------------------------------------------");

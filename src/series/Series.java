@@ -1,12 +1,13 @@
 package series;
 
+import event.Event;
+
 import java.util.ArrayList;
 
-import event.*;
 
 public class Series {
 
-    // Events' ID in this Series
+    // Events' ID in this series.Series
     protected ArrayList<Event> eventArray = new ArrayList<>();
 
     protected ArrayList<String> eventIdArray = new ArrayList<>();
@@ -37,7 +38,7 @@ public class Series {
             eventIdArray.add(event.getEventId());
             return true;
         } else {
-            System.out.println("Event already in this series.");
+            System.out.println("event.Event already in this series.");
             return false;
         }
     }
@@ -45,7 +46,7 @@ public class Series {
     public boolean removeEvent(Event event) {
         if (eventIdArray.contains(event.getEventId())) {
             eventIdArray.remove(event.getEventId());
-            System.out.println("Event removed. ");
+            System.out.println("event.Event removed. ");
             return true;
         } else {
             System.out.println("Error: no such event in this series.");
