@@ -1,1 +1,1 @@
-phase1 & 2 code without GUI.
+phase1 & 2 code without UI.
